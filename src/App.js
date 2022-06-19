@@ -1,10 +1,20 @@
-import './App.css';
+import React, {useContext} from 'react';
+import Layout from './layout/Layout';
+import {Routes, Route} from 'react-router-dom';
+import CityContext from './store/CityContext';
+import MainPage from './pages/MainPage';
+import DetailPage from './pages/DetailPage';
 
 function App() {
+  const {city} = useContext(CityContext);
+
   return (
-    <div className="App">
-      
-    </div>
+    <Layout>
+      <Routes>
+        <Route path="/*" element={<MainPage />} />
+        <Route path={city} element={<DetailPage />} />
+      </Routes>
+    </Layout>
   );
 }
 
