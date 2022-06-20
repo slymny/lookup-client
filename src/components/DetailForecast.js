@@ -21,12 +21,12 @@ function DetailForecast() {
       setHoursSection(
         forecastOfTheDay.map(forecast => (
           <div className={styles.hourly}>
-            <h3>{forecast.dt_txt.split(' ')[1]}</h3>
+            <h3>{forecast.dt_txt.split(' ')[1].substr(0, 5)}</h3>
             <img
               src={`http://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png`}
               alt=""
             />
-            <h4>{forecast.main.temp} °C</h4>
+            <h4>{parseInt(forecast.main.temp)} °C</h4>
           </div>
         )),
       );

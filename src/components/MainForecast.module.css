@@ -4,8 +4,8 @@
     align-items: center;
     width: 100%;
     height: 70vh;
-    background-color: #2d61bbb7;
     gap: 5rem;
+    background-color: #2d61bbb7;
     color: rgb(247, 250, 252);
     font-size: 1.5rem;
 }
