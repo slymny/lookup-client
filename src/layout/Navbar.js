@@ -24,12 +24,42 @@ function Navbar() {
     }
   }, [weather]);
 
+  async function getImage(query) {
+    const cityImageRes = await fetch(
+      `https://api.pexels.com/v1/search?query=${query}`,
+      {
+        headers: {
+          Authorization:
+            '563492ad6f917000010000019035daf060234dd687f66b285c532678',
+        },
+      },
+    );
+    const cityImageData = await cityImageRes.json();
+    return cityImageData.photos;
+  }
+
   async function handleClick() {
     const weather = await axios(
       `https://api.openweathermap.org/data/2.5/weather?q=${searchQuery}&appid=${process.env.REACT_APP_API_KEY_WEATHER}&units=metric`,
     );
     setWeather(weather.data);
     cityInput.current.value = '';
+
+    const query = {
+      city: weather.data.name,
+      country: weather.data.country,
+    };
+
+    let photos = await getImage(query.city);
+    console.log(query);
+    if (photos.length > 0) {
+      const cityImage = photos[0].src.landscape;
+      document.body.background = cityImage;
+    } else {
+      photos = await getImage(query.country);
+      const cityImage = photos[0].src.landscape;
+      document.body.background = cityImage;
+    }
   }
 
   function changeHandler(e) {
