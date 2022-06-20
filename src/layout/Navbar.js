@@ -2,8 +2,10 @@ import axios from 'axios';
 import React, {useRef, useContext, useEffect, useState} from 'react';
 import CityContext from '../store/CityContext';
 import styles from './Navbar.module.css';
+import {useNavigate} from 'react-router-dom';
 
 function Navbar() {
+  const navigate = useNavigate();
   const cityInput = useRef('');
   const {city, updateCity, updateForecastCurrent, forecastCurrent} =
     useContext(CityContext);
@@ -35,23 +37,24 @@ function Navbar() {
       },
     );
     const cityImageData = await cityImageRes.json();
+    console.log(cityImageData);
     return cityImageData.photos;
   }
 
   async function handleClick() {
-    const weather = await axios(
+    navigate('/');
+    const weatherData = await axios(
       `https://api.openweathermap.org/data/2.5/weather?q=${searchQuery}&appid=${process.env.REACT_APP_API_KEY_WEATHER}&units=metric`,
     );
-    setWeather(weather.data);
+    setWeather(weatherData.data);
     cityInput.current.value = '';
 
     const query = {
-      city: weather.data.name,
-      country: weather.data.country,
+      city: weatherData.data.name,
+      desc: weatherData.data.weather[0].description.split(' ').join('%20'),
     };
 
     let photos = await getImage(query.city);
-    console.log(query);
     if (photos.length > 0) {
       const cityImage = photos[0].src.landscape;
       document.body.background = cityImage;
