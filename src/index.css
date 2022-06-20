@@ -5,10 +5,15 @@ body {
   background-size: cover;
   height: 100vh;
   width: 100vw;
-
+  background: #5580c9cc;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+main {
+  background-color: #5580c9cc;
+  color: rgb(247, 250, 252);
 }
