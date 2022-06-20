@@ -1,8 +1,10 @@
 import React, {createContext, useState} from 'react';
 
 const CityContext = createContext({
-  forecast: {},
-  updateForecast: forecast => {},
+  forecastCurrent: null,
+  updateForecastCurrent: forecast => {},
+  forecastDaily: null,
+  updateForecastDaily: forecast => {},
   city: '',
   updateCity: cityName => {},
   cityImage: '',
@@ -11,15 +13,20 @@ const CityContext = createContext({
 
 export function CityContextProvider(props) {
   const [city, setCity] = useState('');
-  const [forecast, setForecast] = useState(null);
+  const [forecastCurrent, setForecastCurrent] = useState(null);
+  const [forecastDaily, setForecastDaily] = useState(null);
   const [cityImage, setCityImage] = useState('');
 
   function updateCityHandler(city) {
     setCity(city);
   }
 
-  function updateForecastHandler(forecast) {
-    setForecast(forecast);
+  function updateForecastCurrentHandler(forecast) {
+    setForecastCurrent(forecast);
+  }
+
+  function updateForecastDailyHandler(forecast) {
+    setForecastDaily(forecast);
   }
 
   function cityImageHandler(image) {
@@ -27,8 +34,10 @@ export function CityContextProvider(props) {
   }
 
   const context = {
-    forecast,
-    updateForecast: updateForecastHandler,
+    forecastCurrent,
+    updateForecastCurrent: updateForecastCurrentHandler,
+    forecastDaily: forecastDaily,
+    updateForecastDaily: updateForecastDailyHandler,
     city,
     updateCity: updateCityHandler,
     cityImage,
