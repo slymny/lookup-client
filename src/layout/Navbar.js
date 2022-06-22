@@ -1,14 +1,19 @@
 import axios from 'axios';
 import React, {useRef, useContext, useEffect, useState} from 'react';
 import CityContext from '../store/CityContext';
+import ErrorAndLoadingContext from '../store/ErrorAndLoadingContext';
 import styles from './Navbar.module.css';
 import {useNavigate} from 'react-router-dom';
 
 function Navbar() {
   const navigate = useNavigate();
   const cityInput = useRef('');
-  const {city, updateCity, updateForecastCurrent, forecastCurrent} =
-    useContext(CityContext);
+  const {updateCity, updateForecastCurrent} = useContext(CityContext);
+  const {changeIsLoading, setError} = useContext(
+    ErrorAndLoadingContext,
+  );
+    const [landing, setLanding] = useState(true)
+
   const [weather, setWeather] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -24,7 +29,7 @@ function Navbar() {
       updateForecastCurrent(weather);
       updateCity(weather.name);
     }
-  }, [weather]);
+  }, [setError, updateCity, updateForecastCurrent, weather]);
 
   async function getImage(query) {
     const cityImageRes = await fetch(
@@ -37,36 +42,49 @@ function Navbar() {
       },
     );
     const cityImageData = await cityImageRes.json();
-    console.log(cityImageData);
     return cityImageData.photos;
   }
 
   async function handleClick() {
-    navigate('/');
-    const weatherData = await axios(
-      `https://api.openweathermap.org/data/2.5/weather?q=${searchQuery}&appid=${process.env.REACT_APP_API_KEY_WEATHER}&units=metric`,
-    );
-    setWeather(weatherData.data);
-    cityInput.current.value = '';
+    if (!landing) {
+      navigate('/');
+      const query = {};
+      try {
+        const weatherData = await axios(
+          `https://api.openweathermap.org/data/2.5/weather?q=${searchQuery}&appid=${process.env.REACT_APP_API_KEY_WEATHER}&units=metric`,
+        );
 
-    const query = {
-      city: weatherData.data.name,
-      desc: weatherData.data.weather[0].description.split(' ').join('%20'),
-    };
+        setWeather(weatherData.data);
+        changeIsLoading(false);
+        setError('');
+        query.city = weatherData.data.name;
+        query.desc = weatherData.data.weather[0].description
+          .split(' ')
+          .join('%20');
+      } catch (err) {
+        changeIsLoading(false);
+        setError('City is not found!');
+        console.log(err.message);
+      }
+      cityInput.current.value = '';
 
-    let photos = await getImage(query.city);
-    if (photos.length > 0) {
-      const cityImage = photos[0].src.landscape;
-      document.body.background = cityImage;
-    } else {
-      photos = await getImage(query.country);
-      const cityImage = photos[0].src.landscape;
-      document.body.background = cityImage;
+      let photos = await getImage(query.city);
+      if (photos.length > 0) {
+        const cityImage = photos[0].src.landscape;
+        document.body.background = cityImage;
+      } else {
+        photos = await getImage(query.country);
+        if (photos.length > 0) {
+          const cityImage = photos[0].src.landscape;
+          document.body.background = cityImage;
+        }
+      }
     }
   }
 
   function changeHandler(e) {
     setSearchQuery(e.target.value);
+    setLanding(false);
   }
 
   return (
@@ -76,7 +94,7 @@ function Navbar() {
         ref={cityInput}
         type="text"
         name="search"
-        placeholder="Search for a location"
+        placeholder="Please enter a city name"
         onChange={changeHandler}
       />
       <button
