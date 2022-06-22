@@ -12,6 +12,7 @@ function App() {
   useEffect(() => {
     navigate('/');
   }, []);
+
   return (
     <Layout>
       <Routes>
