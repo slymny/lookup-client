@@ -4,6 +4,7 @@ import {Routes, Route, useNavigate} from 'react-router-dom';
 import CityContext from './store/CityContext';
 import MainPage from './pages/MainPage';
 import DetailPage from './pages/DetailPage';
+import LandingPage from './pages/LandingPage';
 
 function App() {
   const {city} = useContext(CityContext);
@@ -16,8 +17,9 @@ function App() {
   return (
     <Layout>
       <Routes>
-        <Route path="/*" element={<MainPage />} />
-        <Route path={city} element={<DetailPage />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/weather" element={<MainPage />} />
+        <Route path={`/${city}`} element={<DetailPage />} />
       </Routes>
     </Layout>
   );

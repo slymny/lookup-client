@@ -9,6 +9,7 @@ function DetailPage() {
   const {city, updateForecastDaily} = useContext(CityContext);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
+  
 
   useEffect(() => {
     if (city) {

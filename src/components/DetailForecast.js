@@ -20,7 +20,7 @@ function DetailForecast() {
 
       setHoursSection(
         forecastOfTheDay.map(forecast => (
-          <div className={styles.hourly}>
+          <div key={forecast.dt_txt} className={styles.hourly}>
             <h3>{forecast.dt_txt.split(' ')[1].substr(0, 5)}</h3>
             <img
               src={`http://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png`}
@@ -37,7 +37,7 @@ function DetailForecast() {
         <h3>{city} / {forecastDaily.city.country}</h3>
         <div className={styles['day-buttons']}>
           {dates.map(date => (
-            <button onClick={showHourlyForecast}>{date}</button>
+            <button key={date} onClick={showHourlyForecast}>{date}</button>
           ))}
         </div>
         <h3>{selectedDay ? selectedDay : 'Please select a day to show'}</h3>

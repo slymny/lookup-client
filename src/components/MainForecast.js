@@ -5,6 +5,7 @@ import {NavLink} from 'react-router-dom';
 
 function MainForecast() {
   const {forecastCurrent} = useContext(CityContext);
+  console.log(forecastCurrent)
 
   if (forecastCurrent) {
     return (
