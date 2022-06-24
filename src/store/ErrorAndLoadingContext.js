@@ -8,11 +8,11 @@ const ErrorAndLoadingContext = createContext({
 });
 
 export function ErrorAndLoadingContextProvider(props) {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
   function isLoadingHandler(boolean) {
-    setIsLoading(false);
+    setIsLoading(boolean);
   }
 
   function errorMessageHandler(msg) {
