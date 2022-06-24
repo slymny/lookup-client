@@ -4,11 +4,11 @@ import CityContext from '../store/CityContext';
 import axios from 'axios';
 import {SpinnerCircularFixed} from 'spinners-react';
 import styles from './DetailPage.module.css';
+import ErrorAndLoadingContext from '../store/ErrorAndLoadingContext';
 
 function DetailPage() {
   const {city, updateForecastDaily} = useContext(CityContext);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState('');
+  const {isLoading, error, setError, changeIsLoading} = useContext(ErrorAndLoadingContext);
   
 
   useEffect(() => {
@@ -18,10 +18,10 @@ function DetailPage() {
       )
         .then(res => {
           updateForecastDaily(res.data);
-          setIsLoading(false);
+          changeIsLoading(false);
         })
         .catch(err => {
-          setIsLoading(false);
+          changeIsLoading(false);
           setError(err.message);
         });
     }

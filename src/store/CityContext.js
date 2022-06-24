@@ -7,15 +7,12 @@ const CityContext = createContext({
   updateForecastDaily: forecast => {},
   city: '',
   updateCity: cityName => {},
-  isClicked: '',
-  changeIsClicked: str => {},
 });
 
 export function CityContextProvider(props) {
   const [city, setCity] = useState('');
   const [forecastCurrent, setForecastCurrent] = useState(null);
   const [forecastDaily, setForecastDaily] = useState(null);
-  const [isClicked, setIsClicked] = useState('');
 
   function updateCityHandler(city) {
     setCity(city);
@@ -29,10 +26,6 @@ export function CityContextProvider(props) {
     setForecastDaily(forecast);
   }
 
-  function isClickedHandler(str) {
-    setIsClicked(str);
-  }
-
   const context = {
     forecastCurrent,
     updateForecastCurrent: updateForecastCurrentHandler,
@@ -40,8 +33,6 @@ export function CityContextProvider(props) {
     updateForecastDaily: updateForecastDailyHandler,
     city,
     updateCity: updateCityHandler,
-    isClicked,
-    changeIsClicked: isClickedHandler,
   };
 
   return (

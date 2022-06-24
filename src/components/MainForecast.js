@@ -2,16 +2,23 @@ import React, {useContext} from 'react';
 import CityContext from '../store/CityContext';
 import styles from './MainForecast.module.css';
 import {NavLink} from 'react-router-dom';
+import ErrorAndLoadingContext from '../store/ErrorAndLoadingContext';
 
 function MainForecast() {
   const {forecastCurrent} = useContext(CityContext);
-  console.log(forecastCurrent)
+  const {changeIsLoading, setError} = useContext(ErrorAndLoadingContext)
+
+
+  function clickHandler() {
+    changeIsLoading(true);
+    setError('');
+  }
 
   if (forecastCurrent) {
     return (
       <div className={styles['main-forecast']}>
         <div className={styles.title}>
-          <NavLink to={`/${forecastCurrent.name}`} className={styles.navlink}>
+          <NavLink to={`/${forecastCurrent.name}`} className={styles.navlink} onClick={clickHandler}>
             <h1>{forecastCurrent.name}</h1>
           </NavLink>
           <img

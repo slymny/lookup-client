@@ -8,15 +8,7 @@ import axios from 'axios';
 
 function MainPage() {
   const {error, isLoading} = useContext(ErrorAndLoadingContext);
-  const {
-    updateCity,
-    city,
-    updateForecastCurrent,
-    changeIsLoading,
-    setError,
-    isClicked,
-    forecastCurrent,
-  } = useContext(CityContext);
+  const {city, forecastCurrent} = useContext(CityContext);
 
   useEffect(() => {
     (async () => {
@@ -35,39 +27,6 @@ function MainPage() {
       }
     })();
   }, [city]);
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const weatherData = await axios(
-  //         `https://api.openweathermap.org/data/2.5/weather?q=${isClicked}&appid=${process.env.REACT_APP_API_KEY_WEATHER}&units=metric`,
-  //       );
-
-  //       updateForecastCurrent(weatherData.data);
-  //       changeIsLoading(false);
-  //       setError('');
-  //     } catch (err) {
-  //       changeIsLoading(false);
-  //       setError('City is not found!');
-  //       console.log(err.message);
-  //     }
-  //   })();
-
-  //   (async () => {
-  //     if (forecastCurrent) {
-  //       let photos = await getImage(forecastCurrent.name);
-  //       if (photos.length > 0) {
-  //         const cityImage = photos[0].src.landscape;
-  //         document.body.background = cityImage;
-  //       } else {
-  //         photos = await getImage(forecastCurrent.sys.country);
-  //         if (photos.length > 0) {
-  //           const cityImage = photos[0].src.landscape;
-  //           document.body.background = cityImage;
-  //         }
-  //       }
-  //     }
-  //   })();
-  // }, [changeIsLoading, isClicked, setError, updateForecastCurrent]);
 
   async function getImage(query) {
     const cityImageRes = await fetch(
