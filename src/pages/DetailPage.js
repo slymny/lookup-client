@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect} from 'react';
 import DetailForecast from '../components/DetailForecast';
 import CityContext from '../store/CityContext';
 import axios from 'axios';
@@ -8,17 +8,20 @@ import ErrorAndLoadingContext from '../store/ErrorAndLoadingContext';
 
 function DetailPage() {
   const {city, updateForecastDaily} = useContext(CityContext);
-  const {isLoading, error, setError, changeIsLoading} = useContext(ErrorAndLoadingContext);
-  
+  const {isLoading, error, setError, changeIsLoading} = useContext(
+    ErrorAndLoadingContext,
+  );
 
   useEffect(() => {
     if (city) {
-      axios(
-        `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${process.env.REACT_APP_API_KEY_WEATHER}&units=metric`,
-      )
+      axios(`http://localhost:5000/weather/forecast/${city}`)
         .then(res => {
-          updateForecastDaily(res.data);
           changeIsLoading(false);
+          if (!res.data.error) {
+            updateForecastDaily(res.data);
+          } else {
+            setError(res.data.error.message);
+          }
         })
         .catch(err => {
           changeIsLoading(false);
@@ -27,10 +30,17 @@ function DetailPage() {
     }
   }, []);
 
-  if (error) {
+  if (error.includes('404')) {
+    document.body.background = '#5580c9b2;';
     return (
       <div className={styles.error}>
-        <h1>{error}</h1>
+        <h1>"City is not found!"</h1>
+      </div>
+    );
+  } else if (error && !error.includes('404')) {
+    return (
+      <div className={styles.error}>
+        <h1>"Oops! Something went wrong..."</h1>
       </div>
     );
   }

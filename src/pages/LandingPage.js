@@ -5,11 +5,12 @@ import MainPage from './MainPage';
 
 function LandingPage() {
   const {isClicked} = useContext(CityContext);
+
   return (
     <div>
       {!isClicked ? (
         <div className={styles.warning}>
-          <h1>'Please enter a city!'</h1>
+          <h1>'Please enter a city name!'</h1>
         </div>
       ) : (
         <MainPage />
