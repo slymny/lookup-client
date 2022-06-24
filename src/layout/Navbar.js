@@ -4,7 +4,6 @@ import CityContext from '../store/CityContext';
 import ErrorAndLoadingContext from '../store/ErrorAndLoadingContext';
 import styles from './Navbar.module.css';
 import {useNavigate} from 'react-router-dom';
-import useFetch from '../hooks/useFetch';
 
 function Navbar() {
   const navigate = useNavigate();
@@ -14,13 +13,6 @@ function Navbar() {
 
   const [searchQuery, setSearchQuery] = useState('');
   const [weather, setWeather] = useState(null);
-
-  //   async function getIp() {
-  //     const ipData = await axios('http://ipwho.is/');
-  //     updateCity(ipData.data.city);
-  //     console.log(city);
-  //     setIsCity(true)
-  //   }
 
   useEffect(() => {
     if (weather) {
@@ -36,10 +28,16 @@ function Navbar() {
 
     try {
       const weatherRes = await axios(
-        `https://api.openweathermap.org/data/2.5/weather?q=${searchQuery}&appid=${process.env.REACT_APP_API_KEY_WEATHER}&units=metric`,
+        `http://localhost:5000/weather/${searchQuery}`,
       );
-      setWeather(weatherRes.data);
       changeIsLoading(false);
+      if (!weatherRes.data.error) {
+        setWeather(weatherRes.data.data);
+        const bgImage = weatherRes.data.image;
+        if (bgImage) document.body.background = bgImage;
+      } else {
+        setError(weatherRes.data.error.message);
+      }
     } catch (err) {
       setError(err.message);
       console.log(err);
