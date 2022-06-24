@@ -5,6 +5,7 @@ import {NavLink} from 'react-router-dom';
 
 function MainForecast() {
   const {forecastCurrent} = useContext(CityContext);
+  console.log(forecastCurrent)
 
   if (forecastCurrent) {
     return (
@@ -19,9 +20,9 @@ function MainForecast() {
           />
         </div>
         <div className={styles.infos}>
-          <h5>Real {forecastCurrent.main.temp} °C</h5>
+          <h5>Real {parseInt(forecastCurrent.main.temp)} °C</h5>
+          <h5> Feels {parseInt(forecastCurrent.main.feels_like)} °C</h5>
           <h5>{forecastCurrent.weather[0].description}</h5>
-          <h5> Feels {forecastCurrent.main.feels_like} °C</h5>
         </div>
       </div>
     );

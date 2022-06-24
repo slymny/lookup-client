@@ -1,8 +1,8 @@
 import {useState, useEffect} from 'react';
 import axios from 'axios';
 
-function useFetch(url, deps=[]) {
-  const [isLoading, setIsLoading] = useState(true);
+function useFetch(url, ...deps) {
+  const [isLoading, setIsLoading] = useState(false);
   const [data, satData] = useState(null);
   const [error, setError] = useState('');
 
@@ -19,10 +19,11 @@ function useFetch(url, deps=[]) {
       setError('Oops, something went wrong!');
       console.log(err.message);
     }
-  }, deps);
+  }, [url, deps]);
 
   return {
     isLoading,
+    setIsLoading,
     data,
     error,
   };

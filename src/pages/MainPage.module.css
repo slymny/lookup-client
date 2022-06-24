@@ -1,0 +1,17 @@
+.error {
+    text-align: center;
+    width: 100vw;
+    height: 70vh;
+}
+
+.error h1 {
+    padding: 25vh;
+}
+
+.spinner {
+    text-align: center;
+    margin: auto;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+}
