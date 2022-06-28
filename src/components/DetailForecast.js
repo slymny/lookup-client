@@ -34,7 +34,7 @@ function DetailForecast() {
 
     return (
       <div className={styles.details}>
-        <h3>{city} / {forecastDaily.city.country}</h3>
+        <h3>{forecastDaily.city.name} / {forecastDaily.city.country}</h3>
         <div className={styles['day-buttons']}>
           {dates.map(date => (
             <button key={date} onClick={showHourlyForecast}>{date}</button>

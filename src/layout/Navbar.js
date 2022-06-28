@@ -17,7 +17,7 @@ function Navbar() {
   useEffect(() => {
     if (weather) {
       updateForecastCurrent(weather);
-      updateCity(weather.name);
+      updateCity(weather.name.split(' ').join('%20'));
     }
   }, [updateCity, updateForecastCurrent, weather]);
 
