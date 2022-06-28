@@ -28,7 +28,7 @@ function Navbar() {
 
     try {
       const weatherRes = await axios(
-        `http://localhost:5000/weather/${searchQuery}`,
+        `https://lookup-weather-app.herokuapp.com/weather/${searchQuery}`,
       );
       changeIsLoading(false);
       if (!weatherRes.data.error) {

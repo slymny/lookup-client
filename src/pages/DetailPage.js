@@ -14,7 +14,7 @@ function DetailPage() {
 
   useEffect(() => {
     if (city) {
-      axios(`http://localhost:5000/weather/forecast/${city}`)
+      axios(`https://lookup-weather-app.herokuapp.com/weather/forecast/${city}`)
         .then(res => {
           changeIsLoading(false);
           if (!res.data.error) {
