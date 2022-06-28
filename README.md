@@ -4,6 +4,9 @@ Simple, React weather application.
 ---
 
 ## How does application works?
+1. When user enter a city name, the app shows the current weather of the city.
+   ![Log in]
+   (./public/assets/main.png)
 
 <!--
 1. To use the application **log in** is required. If the user **didn't sign up**, then **sign up** is required.
