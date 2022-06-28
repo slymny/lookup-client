@@ -5,62 +5,63 @@ Simple, React weather application.
 
 ## How does application works?
 1. When user enter a city name, the app shows the current weather of the city.
-   ![Log in]
-   (./public/assets/main.png)
+   <img src='./public/assets/main.png' />
+   
+2. When user enter a city name, the page's background changes to that city' image. If there is no image related to that city, the app searches images related to country code in the image api.
 
-<!--
-1. To use the application **log in** is required. If the user **didn't sign up**, then **sign up** is required.
-   ![Log in]
-   (./readmeSources/log_in.png)
 
-1. At the home page there is a button named **Get Random Recipe** which renders randomly a recipe from the [recipe api](https://spoonacular.com/food-api/docs#Get-Random-Recipes). _The rendered recipe number can be increased but due to api call limitation, only one render recipe is rendered._
-   ![Get Random Recipe](./readmeSources/get_random_recipe.png)
-
-   - with _Get Random Recipe_ feature, **per recipe title, image, cooking time and serving number** is rendered. Also below every recipe there is a **like** button and **Recipe Details** button. When clicked **like** button, recipe is stored in **favorite recipes** _which can be reached by clicking **Favorite Recipes** link in the navigation section which is at the top of the page_.
-
-     ![Favorite Recipes](./readmeSources/favorite_recipes.png)
-     In this page favorite recipes are rendered if there is no any favored recipe, it says ❤️Like Some Recipe❤️.
-
-   - When clicked **Recipe details**, Recipe Details page is opened for that recipe.
-     ![Favorite Recipes](./readmeSources/recipe_details.png)
-     In this page, recipe details are rendered which are **image, title, preparation time, servings, instructions for preparation**.
-
-1. In the navigation section there is **Plan Your Meals** link. When clicked, a new page is opened **with an input area which is for calories** and a button for **getting daily meal plan according to calories entered** by using [recipe api](https://spoonacular.com/food-api/docs#Get-Meal-Plan-Day)
-
-   ![Plan Your Meal](./readmeSources/get_daily_meal.png)
-   In this page daily meal plan is rendered according to calorie amount entered. Also for every recipe details can be seen when clicked on _Recipe Details_ button.
-
-1. In the navigation section there is **Find Recipe** link. When clicked, a new page is opened **with an input area which is for name, ingredients etc related to a recipe** and a button for **Searching Recipe**. _Due to api call limit only one result is rendered_ by [recipe api] (https://spoonacular.com/food-api/docs#Search-Recipes-Complex)
-
-   ![Find Recipe](./readmeSources/find_recipe.png)
--->
+3. When user click the city name, the app shows the detailed forecast of the city for 5 days.
+   <img src='./public/assets/detail.png' />
+   
 ---
 
-## Features
-
-> When user enter any city name, if it's forecast is found in the openweathermap api, it's shown in the page
-
-> 
-
-
-
----
 
 ## Used APIs
 
-> openweathermap  --> for weather information
-> pexels          --> for background images
+- openweathermap  --> for weather information
+- pexels          --> for background images
 
 
 ---
 
 
 ## Structure
-
+- public
+   - assets
+   - index.html
+- src
+   - components
+      - DetailForecast.js
+      - DetailForecast.module.css
+      - MainForecast.js
+      - MainForecast.module.css
+   - hooks
+      - useFetch.js
+   - layout
+      - Footer.js
+      - Footer.module.css
+      - Layout.js
+      - Navbar.js
+      - Navbar.module.css
+   - pages
+      - DetailPage.js
+      - DetailPage.module.css
+      - LandingPage.js
+      - LandingPage.module.css
+      - MainPage.js
+      - MainPage.module.css
+   - store
+      - CityContext.js
+      - ErrorAndLoadingContext.js
+   - App.js
+   - App.css
+   - index.js
+   - index.css
+- package.json
+- package-lock.json
+- README.md
 
 
 ---
 
 > [See server side](https://github.com/slymny/lookup-server)
-
-## Note
