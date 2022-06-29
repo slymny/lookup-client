@@ -3,3 +3,11 @@
     width: 100vw;
     height: 70vh;
 }
+
+.spinner {
+    text-align: center;
+    margin: auto;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+}
