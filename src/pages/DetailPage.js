@@ -2,9 +2,9 @@ import React, {useContext, useEffect} from 'react';
 import DetailForecast from '../components/DetailForecast';
 import CityContext from '../store/CityContext';
 import axios from 'axios';
-import {SpinnerCircularFixed} from 'spinners-react';
-import styles from './DetailPage.module.css';
 import ErrorAndLoadingContext from '../store/ErrorAndLoadingContext';
+import ErrorHandling from '../components/ErrorHandling';
+import LoadingHandling from '../components/LoadingHandling';
 
 function DetailPage() {
   const {city, updateForecastDaily} = useContext(CityContext);
@@ -14,54 +14,29 @@ function DetailPage() {
 
   useEffect(() => {
     if (city) {
-      axios(`https://lookup-weather-app.herokuapp.com/weather/forecast/${city}`)
-        .then(res => {
+      (async () => {
+        try {
+          const weatherData = await axios(
+            `https://lookup-weather-app.herokuapp.com/weather/forecast/${city}`,
+          );
           changeIsLoading(false);
-          if (!res.data.error) {
-            updateForecastDaily(res.data);
+          if (weatherData.data.error) {
+            setError(weatherData.data.error.message);
           } else {
-            setError(res.data.error.message);
+            updateForecastDaily(weatherData.data);
           }
-        })
-        .catch(err => {
+        } catch (err) {
           changeIsLoading(false);
           setError(err.message);
-        });
+        }
+      })();
     }
   }, []);
 
-  if (error.includes('404')) {
-    document.body.background = '#5580c9b2;';
-    return (
-      <div className={styles.error}>
-        <h1>"City is not found!"</h1>
-      </div>
-    );
-  } else if (error && !error.includes('404')) {
-    return (
-      <div className={styles.error}>
-        <h1>"Oops! Something went wrong..."</h1>
-      </div>
-    );
-  }
+  if (error.includes('404')) return <ErrorHandling msg="City is not found!" />;
+  else if (error) return <ErrorHandling msg="Oops! Something went wrong..." />;
 
-  return (
-    <>
-      {isLoading ? (
-        <div className={styles.spinner}>
-          <SpinnerCircularFixed
-            size="20%"
-            color="#5CA4FF"
-            secondaryColor="#CDE9FF"
-          />
-        </div>
-      ) : (
-        <div>
-          <DetailForecast />
-        </div>
-      )}
-    </>
-  );
+  return <div>{isLoading ? <LoadingHandling /> : <DetailForecast />}</div>;
 }
 
 export default DetailPage;
