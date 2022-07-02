@@ -1,9 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
-import styles from './LandingPage.module.css';
 import CityContext from '../store/CityContext';
 import MainForecast from '../components/MainForecast';
-import {SpinnerCircularFixed} from 'spinners-react';
 import axios from 'axios';
+import ErrorHandling from '../components/ErrorHandling';
+import LoadingHandling from '../components/LoadingHandling';
 
 function LandingPage() {
   const {updateForecastCurrent, updateCity} = useContext(CityContext);
@@ -16,7 +16,9 @@ function LandingPage() {
         const locationRes = await axios('http://ip-api.com/json/');
         const location = locationRes.data.city;
         updateCity(location);
-        const weatherRes = await axios(`https://lookup-weather-app.herokuapp.com/${location}`);
+        const weatherRes = await axios(
+          `https://lookup-weather-app.herokuapp.com/${location}`,
+        );
         setIsLoading(false);
         if (!weatherRes.data.error) {
           updateForecastCurrent(weatherRes.data.data);
@@ -33,30 +35,13 @@ function LandingPage() {
     })();
   }, []);
 
-  if (error) {
-    return (
-      <div className={styles.warning}>
-        <h1>'Please enter a city name!'</h1>
-      </div>
-    );
-  }
+  if (error) return <ErrorHandling msg="Please enter a city name!" />;
 
   return (
-    <>
-      {isLoading ? (
-        <div className={styles.spinner}>
-          <SpinnerCircularFixed
-            size="20%"
-            color="#5CA4FF"
-            secondaryColor="#CDE9FF"
-          />
-        </div>
-      ) : (
-        <div>
-          <MainForecast />
-        </div>
-      )}
-    </>
+    <div>
+      {isLoading ? <LoadingHandling /> 
+      : <MainForecast />}
+    </div>
   );
 }
 
