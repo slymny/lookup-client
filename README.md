@@ -1,16 +1,19 @@
-# lookup-client
+# lookup
+[Check it here!](https://lookup-weather.netlify.app)
 
 Simple, React weather application.
 ---
 
 ## How does application works?
-1. When user enter a city name, the app shows the current weather of the city.
+1. With loading the landing page, the application get the user's city from user's ip address and show that city's current weather. The app changes background to image of that city.
+
+2. When user enter a city name, the app shows the current weather of the city.
    <img src='./public/assets/main.png' />
    
-2. When user enter a city name, the page's background changes to that city' image. If there is no image related to that city, the app searches images related to country code in the image api.
+3. When user enter a city name, the page's background changes to image of that city. If there is no image related to that city, the app searches images related to country code in the image api.
 
 
-3. When user click the city name, the app shows the detailed forecast of the city for 5 days.
+4. When user click the city name, the app shows the detailed forecast of the city for 5 days.
    <img src='./public/assets/detail.png' />
    
 ---
@@ -20,6 +23,7 @@ Simple, React weather application.
 
 - openweathermap  --> for weather information
 - pexels          --> for background images
+- ipgeolocation   --> for the ip of user
 
 
 ---
