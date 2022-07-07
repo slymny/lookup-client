@@ -13,7 +13,7 @@ function LandingPage() {
   useEffect(() => {
     (async () => {
       try {
-        const locationRes = await axios('http://ip-api.com/json/');
+        const locationRes = await axios(`https://api.ipgeolocation.io/ipgeo?apiKey=${process.env.REACT_APP_IP_API_KEY}`);
         const location = locationRes.data.city;
         updateCity(location);
         const weatherRes = await axios(
